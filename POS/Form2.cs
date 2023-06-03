@@ -111,6 +111,21 @@ namespace POS
                             TabIndex = 10,
                         };
 
+                        Button deleteButton = new Button()
+                        {
+                            Text = "D",
+                            ForeColor = Color.Blue,
+                            BackColor = Color.White,
+                        };
+                        deleteButton.Click += Button_Click;
+
+                        Button quantityButton = new Button()
+                        {
+                            Text = "Q",
+                            ForeColor = Color.Blue,
+                            BackColor = Color.White,
+                        };
+                        quantityButton.Click += quant_Click;
 
 
                         if (productsDict.ContainsKey(productName))
@@ -146,9 +161,13 @@ namespace POS
                             buyingPanel.Controls.Add(label2, column + 1, row);
                             buyingPanel.Controls.Add(label3, column + 2, row);
 
+                            // Add deletion and quantity button
+                            buyingPanel.Controls.Add(deleteButton, column + 3, row);
+                            buyingPanel.Controls.Add(quantityButton, column + 4, row);
+
                             // Change total price
                             priceOfGoods = priceOfGoods + productPrice;
-                            totalPrice.Text = $"Price: {(priceOfGoods).ToString()}";
+                            totalPrice.Text = $"Price: €{(priceOfGoods).ToString()}";
 
                             // Record position of product
                             productPosition.Add(productName, row);
@@ -188,5 +207,56 @@ namespace POS
         {
 
         }
+
+
+        // Button click event handler
+        private void Button_Click(object sender, EventArgs e)
+        {
+            Button clickedButton = (Button)sender;
+            // Perform actions specific to the second row button
+            //MessageBox.Show($"Button in row {buyingPanel.GetRow(clickedButton)} clicked");
+            Debug.WriteLine($"Button in row {buyingPanel.GetRow(clickedButton)} clicked");
+
+            int rowPressed = buyingPanel.GetRow(clickedButton);
+
+            // Remove presence from productsDict and productPosition
+            productsDict.Remove(buyingPanel.GetControlFromPosition(0, rowPressed).Text);
+            productPosition.Remove(buyingPanel.GetControlFromPosition(0, rowPressed).Text);
+
+            // Adjust the price
+            priceOfGoods = priceOfGoods - decimal.Parse(buyingPanel.GetControlFromPosition(1, rowPressed).Text);
+            totalPrice.Text = "Price: €" + priceOfGoods.ToString();
+
+            // Delete the row
+            for (int i = 0; i < buyingPanel.ColumnCount; i++)
+            {
+                Control Control = buyingPanel.GetControlFromPosition(i, rowPressed);
+                buyingPanel.Controls.Remove(Control);
+            }
+
+            // Decrement all productPosition above x
+            // Move rows up
+
+        }
+
+        private void quant_Click(object sender, EventArgs e)
+        {
+            Button clickedButton = (Button)sender;
+
+            Debug.WriteLine($"Button in row {buyingPanel.GetRow(clickedButton)} clicked");
+            int rowPressed = buyingPanel.GetRow(clickedButton);
+
+            // Selected
+            buyingPanel.GetControlFromPosition(0, rowPressed).BackColor = Color.LightBlue;
+            buyingPanel.GetControlFromPosition(1, rowPressed).BackColor = Color.LightBlue;
+            buyingPanel.GetControlFromPosition(2, rowPressed).BackColor = Color.LightBlue;
+            buyingPanel.GetControlFromPosition(3, rowPressed).BackColor = Color.LightBlue;
+
+
+            // Clear highlighting after another thing is highlighted
+        }
+
+
+
     }
 }

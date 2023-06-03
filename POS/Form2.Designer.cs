@@ -69,7 +69,7 @@
             leftPanel.Dock = DockStyle.Left;
             leftPanel.Location = new Point(0, 0);
             leftPanel.Name = "leftPanel";
-            leftPanel.Size = new Size(332, 594);
+            leftPanel.Size = new Size(392, 594);
             leftPanel.TabIndex = 2;
             // 
             // totalPrice
@@ -77,18 +77,20 @@
             totalPrice.AutoSize = true;
             totalPrice.Location = new Point(58, 550);
             totalPrice.Name = "totalPrice";
-            totalPrice.Size = new Size(45, 15);
+            totalPrice.Size = new Size(51, 15);
             totalPrice.TabIndex = 1;
-            totalPrice.Text = "Price: 0";
+            totalPrice.Text = "Price: €0";
             totalPrice.Click += label1_Click_1;
             // 
             // buyingPanel
             // 
             buyingPanel.AutoScroll = true;
-            buyingPanel.ColumnCount = 3;
-            buyingPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            buyingPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            buyingPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 36F));
+            buyingPanel.ColumnCount = 5;
+            buyingPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 49.16201F));
+            buyingPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50.83799F));
+            buyingPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 96F));
+            buyingPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 30F));
+            buyingPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 28F));
             buyingPanel.Location = new Point(29, 24);
             buyingPanel.Name = "buyingPanel";
             buyingPanel.Padding = new Padding(13, 0, 13, 0);
@@ -113,13 +115,13 @@
             buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
             buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
             buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            buyingPanel.Size = new Size(278, 520);
+            buyingPanel.Size = new Size(340, 520);
             buyingPanel.TabIndex = 0;
             buyingPanel.Paint += buyingPanel_Paint;
             // 
             // productIDtxt
             // 
-            productIDtxt.Location = new Point(368, 542);
+            productIDtxt.Location = new Point(428, 542);
             productIDtxt.Name = "productIDtxt";
             productIDtxt.Size = new Size(257, 23);
             productIDtxt.TabIndex = 0;
@@ -127,7 +129,7 @@
             // 
             // productIDbtn
             // 
-            productIDbtn.Location = new Point(631, 542);
+            productIDbtn.Location = new Point(691, 542);
             productIDbtn.Name = "productIDbtn";
             productIDbtn.Size = new Size(75, 23);
             productIDbtn.TabIndex = 3;
@@ -138,7 +140,7 @@
             // errorLabel
             // 
             errorLabel.AutoSize = true;
-            errorLabel.Location = new Point(368, 576);
+            errorLabel.Location = new Point(428, 576);
             errorLabel.Name = "errorLabel";
             errorLabel.Size = new Size(38, 15);
             errorLabel.TabIndex = 4;
