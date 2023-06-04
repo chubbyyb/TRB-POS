@@ -30,6 +30,10 @@
         {
             logOutButton = new Button();
             panel1 = new Panel();
+            baseDiscountEur = new Button();
+            baseDiscountPrcnt = new Button();
+            baseQBtn = new Button();
+            baseDeleteBtn = new Button();
             leftPanel = new Panel();
             totalPrice = new Label();
             buyingPanel = new TableLayoutPanel();
@@ -53,12 +57,56 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(24, 30, 54);
+            panel1.Controls.Add(baseDiscountEur);
+            panel1.Controls.Add(baseDiscountPrcnt);
+            panel1.Controls.Add(baseQBtn);
+            panel1.Controls.Add(baseDeleteBtn);
             panel1.Controls.Add(logOutButton);
             panel1.Dock = DockStyle.Bottom;
             panel1.Location = new Point(0, 594);
             panel1.Name = "panel1";
             panel1.Size = new Size(1426, 262);
             panel1.TabIndex = 1;
+            // 
+            // baseDiscountEur
+            // 
+            baseDiscountEur.Location = new Point(517, 138);
+            baseDiscountEur.Name = "baseDiscountEur";
+            baseDiscountEur.Size = new Size(98, 98);
+            baseDiscountEur.TabIndex = 4;
+            baseDiscountEur.Text = "Discount €";
+            baseDiscountEur.UseVisualStyleBackColor = true;
+            baseDiscountEur.Click += baseDiscountEur_Click;
+            // 
+            // baseDiscountPrcnt
+            // 
+            baseDiscountPrcnt.Location = new Point(401, 138);
+            baseDiscountPrcnt.Name = "baseDiscountPrcnt";
+            baseDiscountPrcnt.Size = new Size(98, 98);
+            baseDiscountPrcnt.TabIndex = 3;
+            baseDiscountPrcnt.Text = "Discount %";
+            baseDiscountPrcnt.UseVisualStyleBackColor = true;
+            baseDiscountPrcnt.Click += baseDiscountPrcnt_Click;
+            // 
+            // baseQBtn
+            // 
+            baseQBtn.Location = new Point(517, 34);
+            baseQBtn.Name = "baseQBtn";
+            baseQBtn.Size = new Size(98, 98);
+            baseQBtn.TabIndex = 2;
+            baseQBtn.Text = "Change Quantity";
+            baseQBtn.UseVisualStyleBackColor = true;
+            baseQBtn.Click += baseQBtn_Click;
+            // 
+            // baseDeleteBtn
+            // 
+            baseDeleteBtn.Location = new Point(401, 34);
+            baseDeleteBtn.Name = "baseDeleteBtn";
+            baseDeleteBtn.Size = new Size(98, 98);
+            baseDeleteBtn.TabIndex = 1;
+            baseDeleteBtn.Text = "Delete";
+            baseDeleteBtn.UseVisualStyleBackColor = true;
+            baseDeleteBtn.Click += button1_Click;
             // 
             // leftPanel
             // 
@@ -179,5 +227,9 @@
         private Label errorLabel;
         private TableLayoutPanel buyingPanel;
         private Label totalPrice;
+        private Button baseDeleteBtn;
+        private Button baseQBtn;
+        private Button baseDiscountEur;
+        private Button baseDiscountPrcnt;
     }
 }
