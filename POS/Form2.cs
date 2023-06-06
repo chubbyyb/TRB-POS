@@ -27,6 +27,9 @@ namespace POS
         public const int productNameCol = 0;
         public const int productPriceCol = 1;
         public const int productQntCol = 2;
+        public const string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\keith\OneDrive - Technological University Dublin\Documents\Database2.accdb";
+        public const string connectionStringRecords = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\keith\OneDrive - Technological University Dublin\Documents\Database3.accdb";
+
 
 
         Dictionary<string, int> productsDict =
@@ -36,11 +39,22 @@ namespace POS
             new Dictionary<string, int>();
 
 
-
         public Form2()
         {
             InitializeComponent();
             errorLabel.Visible = false;
+
+
+            //Disable cash/card buttons
+            panelFinishTransactionCardBtn.Enabled = false;
+            panelFinishTransactionCashBtn.Enabled = false;
+
+            //Disable goBackButton
+            goBackTransactionBtn.Visible = false;
+            goBackTransactionBtn.Enabled = false;
+            //transactionPanel.BackColor = Color.FromArgb(25, Color.Black);
+
+
         }
 
 
@@ -58,7 +72,6 @@ namespace POS
         private void productIDbtn_Click(object sender, EventArgs e)
         {
             string currentProductID = productIDtxt.Text;
-            string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\keith\OneDrive - Technological University Dublin\Documents\Database2.accdb";
 
             // SQL query to search for the number "00002" under the "Product ID" table
             string sqlQuery = $"SELECT * FROM Table1 WHERE ProductID = \"{(productIDtxt.Text).ToString()}\"";
@@ -128,11 +141,13 @@ namespace POS
 
                         Button quantityButton = new Button()
                         {
-                            Text = "Q",
-                            ForeColor = Color.Blue,
-                            BackColor = Color.White,
+                            //Text = "",
+                            //ForeColor = Color.Black,
+                            BackColor = Color.CornflowerBlue,
+                            FlatStyle = FlatStyle.Flat,
                         };
                         quantityButton.Click += quant_Click;
+                        quantityButton.FlatAppearance.BorderSize = 0;
 
 
                         if (productsDict.ContainsKey(productName)) // if product exists
@@ -169,7 +184,7 @@ namespace POS
                             buyingPanel.Controls.Add(label3, productQntCol, row);
 
                             // Add deletion and quantity button
-                            buyingPanel.Controls.Add(deleteButton, column + 3, row);
+                            //buyingPanel.Controls.Add(deleteButton, column + 3, row);
                             buyingPanel.Controls.Add(quantityButton, column + 4, row);
 
                             // Change total price
@@ -198,6 +213,8 @@ namespace POS
                 reader.Close();
                 connection.Close();
             }
+
+            productIDtxt.Clear();
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -324,11 +341,24 @@ namespace POS
                     quantityAmount = Microsoft.VisualBasic.Interaction.InputBox("How many items?", "Quantity Selector", "1-999");
                 } while (Int32.TryParse(quantityAmount, out quantityAmountInteger) == false || quantityAmountInteger < 1);
 
+                //using(quantitySelectorForm quantitySelectorForm = new quantitySelectorForm())
+                //{
+                //    if(quantitySelectorForm.ShowDialog() == DialogResult.OK) 
+                //    {
+                //        if((Int32.TryParse(quantitySelectorForm.selectedText, out quantityAmountInteger) == false) || quantityAmountInteger < 1)
+                //        {
+                //            MessageBox.Show("Ivalid selection, number must be over 1!");
+                //            return;
+                //       }
+                //        quantityAmount = quantitySelectorForm.selectedText;
+                //    }
+                //    else if(quantitySelectorForm.sh)
+                //}
+
 
                 decimal productPrice = 0;
                 string productSelected = buyingPanel.GetControlFromPosition(productNameCol, rowPressed).Text;
 
-                string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\keith\OneDrive - Technological University Dublin\Documents\Database2.accdb";
                 string sqlQuery = $"SELECT * FROM Table1 WHERE ProductName = \"{(productSelected)}\"";
 
                 using (OleDbConnection connection = new OleDbConnection(connectionString))
@@ -445,6 +475,237 @@ namespace POS
 
                 // Adjust total price label
                 totalPrice.Text = $"Price: €{(priceOfGoods + priceOfRow).ToString("#.##")}";
+            }
+        }
+
+        private void panelFinishTransactionCardBtn_Click(object sender, EventArgs e)
+        {
+            Debug.WriteLine("________TYPE: CARD________");
+
+            decimal productPrice = 0;
+            string sqlQuery = "";
+
+            foreach (KeyValuePair<string, int> pair in productsDict)
+            {
+
+                sqlQuery = $"SELECT * FROM Table1 WHERE ProductName = \"{(pair.Key)}\"";
+
+                using (OleDbConnection connection = new OleDbConnection(connectionString))
+                {
+                    // Open the database connection
+                    connection.Open();
+
+                    // Create a command object with the SQL query and connection
+                    OleDbCommand command = new OleDbCommand(sqlQuery, connection);
+
+                    // Execute the query and obtain a data reader
+                    OleDbDataReader reader = command.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        errorLabel.Visible = false;
+
+                        while (reader.Read())
+                        {
+                            // Access the values of the retrieved row
+                            productPrice = reader.GetDecimal(reader.GetOrdinal("Price"));
+
+                            // Adjust the price
+                            productPrice = pair.Value * productPrice;
+                        }
+                    }
+
+                    reader.Close();
+                    connection.Close();
+
+                    Debug.WriteLine("Product: " + pair.Key + ", Quantity: " + pair.Value + ", Price: €" + productPrice);
+
+                }
+            }
+
+            try
+            {
+                sqlQuery = $"INSERT INTO Table1 (totalPrice, dateOfTransaction, type) VALUES ({priceOfGoods}, '{DateTime.Now.ToString("dd/MM/yy")}', 'Card')";
+
+                using (OleDbConnection connection = new OleDbConnection(connectionStringRecords))
+                {
+                    connection.Open();
+
+                    OleDbCommand command = new OleDbCommand(sqlQuery, connection);
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception or log the error message
+                Debug.WriteLine("An error occurred: " + ex.Message);
+            }
+
+            // Refresh after every transaction
+            this.Controls.Clear();
+            InitializeComponent();
+            startingPosX = 29;
+            startingPosY = 11;
+            column = 0;
+            row = 0;
+            rowPressed = -1;
+            priceOfGoods = 0;
+            productsDict.Clear();
+            productPosition.Clear();
+            errorLabel.Visible = false;
+            //Disable cash/card buttons
+            panelFinishTransactionCardBtn.Enabled = false;
+            panelFinishTransactionCashBtn.Enabled = false;
+
+            //Disable goBackButton
+            goBackTransactionBtn.Visible = false;
+            goBackTransactionBtn.Enabled = false;
+            //transactionPanel.BackColor = Color.FromArgb(25, Color.Black);
+
+        }
+
+        private void panelFinishTransactionCashBtn_Click(object sender, EventArgs e)
+        {
+            Debug.WriteLine("________TYPE: CASH________");
+
+            decimal productPrice = 0;
+            string sqlQuery = "";
+
+            foreach (KeyValuePair<string, int> pair in productsDict)
+            {
+
+                sqlQuery = $"SELECT * FROM Table1 WHERE ProductName = \"{(pair.Key)}\"";
+
+                using (OleDbConnection connection = new OleDbConnection(connectionString))
+                {
+                    // Open the database connection
+                    connection.Open();
+
+                    // Create a command object with the SQL query and connection
+                    OleDbCommand command = new OleDbCommand(sqlQuery, connection);
+
+                    // Execute the query and obtain a data reader
+                    OleDbDataReader reader = command.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        errorLabel.Visible = false;
+
+                        while (reader.Read())
+                        {
+                            // Access the values of the retrieved row
+                            productPrice = reader.GetDecimal(reader.GetOrdinal("Price"));
+
+                            // Adjust the price
+                            productPrice = pair.Value * productPrice;
+                        }
+                    }
+
+                    reader.Close();
+                    connection.Close();
+
+                    Debug.WriteLine("Product: " + pair.Key + ", Quantity: " + pair.Value + ", Price: €" + productPrice);
+                }
+            }
+
+            try
+            {
+                sqlQuery = $"INSERT INTO Table1 (totalPrice, dateOfTransaction, type) VALUES ({priceOfGoods}, '{DateTime.Now.ToString("dd/MM/yy")}', 'Cash')";
+
+                using (OleDbConnection connection = new OleDbConnection(connectionStringRecords))
+                {
+                    connection.Open();
+
+                    OleDbCommand command = new OleDbCommand(sqlQuery, connection);
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception or log the error message
+                Debug.WriteLine("An error occurred: " + ex.Message);
+            }
+
+
+            // Refresh after every transaction
+            this.Controls.Clear();
+            InitializeComponent();
+            startingPosX = 29;
+            startingPosY = 11;
+            column = 0;
+            row = 0;
+            rowPressed = -1;
+            priceOfGoods = 0;
+            productsDict.Clear();
+            productPosition.Clear();
+            errorLabel.Visible = false;
+            //Disable cash/card buttons
+            panelFinishTransactionCardBtn.Enabled = false;
+            panelFinishTransactionCashBtn.Enabled = false;
+
+            //Disable goBackButton
+            goBackTransactionBtn.Visible = false;
+            goBackTransactionBtn.Enabled = false;
+            //transactionPanel.BackColor = Color.FromArgb(25, Color.Black);
+        }
+
+        private void finishTransactionBtn_Click(object sender, EventArgs e)
+        {
+
+            if (productsDict.Count == 0)
+            {
+                MessageBox.Show("No Items scanned!");
+            }
+            else
+            {
+                goBackTransactionBtn.Enabled = true;
+                goBackTransactionBtn.Visible = true;
+
+                transactionPanel.BorderStyle = BorderStyle.FixedSingle;
+                panelFinishTransactionCardBtn.Enabled = true;
+                panelFinishTransactionCashBtn.Enabled = true;
+
+                productIDbtn.Enabled = false;
+                baseDeleteBtn.Enabled = false;
+                baseQBtn.Enabled = false;
+                baseDiscountEur.Enabled = false;
+                baseDiscountPrcnt.Enabled = false;
+                logOutButton.Enabled = false;
+
+                finishTransactionBtn.Enabled = false;
+            }
+        }
+
+        private void goBackTransactionBtn_Click(object sender, EventArgs e)
+        {
+            productIDbtn.Enabled = true;
+            baseDeleteBtn.Enabled = true;
+            baseQBtn.Enabled = true;
+            baseDiscountEur.Enabled = true;
+            baseDiscountPrcnt.Enabled = true;
+            logOutButton.Enabled = true;
+
+            transactionPanel.BorderStyle = BorderStyle.None;
+            panelFinishTransactionCardBtn.Enabled = false;
+            panelFinishTransactionCashBtn.Enabled = false;
+
+
+            goBackTransactionBtn.Enabled = false;
+            goBackTransactionBtn.Visible = false;
+
+            finishTransactionBtn.Enabled = true;
+        }
+
+        private void productIDtxt_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+
+                productIDbtn_Click(sender, e);
             }
         }
     }

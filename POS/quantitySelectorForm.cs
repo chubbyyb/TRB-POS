@@ -12,6 +12,9 @@ namespace POS
 {
     public partial class quantitySelectorForm : Form
     {
+
+        public string selectedText { get; set; }
+
         public quantitySelectorForm()
         {
             InitializeComponent();
@@ -20,6 +23,16 @@ namespace POS
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void quantitySelectorForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            selectedText = quantitySelectorTxt.Text;
         }
     }
 }

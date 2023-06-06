@@ -28,32 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            textBox1 = new TextBox();
+            quantitySelectorTxt = new TextBox();
             label1 = new Label();
             button1 = new Button();
             button2 = new Button();
+            colorDialog1 = new ColorDialog();
             SuspendLayout();
             // 
-            // textBox1
+            // quantitySelectorTxt
             // 
-            textBox1.Location = new Point(202, 110);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(100, 23);
-            textBox1.TabIndex = 0;
+            quantitySelectorTxt.Location = new Point(202, 110);
+            quantitySelectorTxt.Name = "quantitySelectorTxt";
+            quantitySelectorTxt.Size = new Size(100, 23);
+            quantitySelectorTxt.TabIndex = 0;
+            quantitySelectorTxt.TextChanged += textBox1_TextChanged;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(120, 79);
+            label1.Location = new Point(64, 113);
             label1.Name = "label1";
-            label1.Size = new Size(114, 15);
+            label1.Size = new Size(102, 15);
             label1.TabIndex = 1;
-            label1.Text = "How many buttons?";
+            label1.Text = "How many items?";
             label1.Click += label1_Click;
             // 
             // button1
             // 
-            button1.Location = new Point(308, 175);
+            button1.DialogResult = DialogResult.OK;
+            button1.Location = new Point(305, 175);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 2;
@@ -62,7 +65,8 @@
             // 
             // button2
             // 
-            button2.Location = new Point(202, 175);
+            button2.DialogResult = DialogResult.Cancel;
+            button2.Location = new Point(78, 175);
             button2.Name = "button2";
             button2.Size = new Size(75, 23);
             button2.TabIndex = 3;
@@ -77,18 +81,21 @@
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(label1);
-            Controls.Add(textBox1);
+            Controls.Add(quantitySelectorTxt);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "quantitySelectorForm";
             Text = "quantitySelectorForm";
+            Load += quantitySelectorForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private TextBox textBox1;
+        private TextBox quantitySelectorTxt;
         private Label label1;
         private Button button1;
         private Button button2;
+        private ColorDialog colorDialog1;
     }
 }

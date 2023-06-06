@@ -1,6 +1,9 @@
 using System.Diagnostics;
+using System.Drawing.Drawing2D;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows.Forms;
 using Timer = System.Timers.Timer;
 
 namespace POS
@@ -10,7 +13,6 @@ namespace POS
         public static Timer fadeTimer = new Timer(100);
         public static int secondsCount = 0;
         public static int secondsSinceClick;
-
 
 
         public Form1()
@@ -54,13 +56,9 @@ namespace POS
 
         }
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void textBox1_TextChanged_1(object sender, EventArgs e)
         {
+
 
         }
 
@@ -95,6 +93,38 @@ namespace POS
 
             incorrectLogin.ForeColor = Color.FromArgb(46, 51, 73);
 
+        }
+
+        private void txtUser_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+
+                txtPass.Focus();
+            }
+        }
+
+        private void txtPass_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+
+                button1_Click(sender, e);
+            }
+        }
+
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void minButton_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
         }
     }
 }

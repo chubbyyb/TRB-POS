@@ -30,6 +30,11 @@
         {
             logOutButton = new Button();
             panel1 = new Panel();
+            goBackTransactionBtn = new Button();
+            finishTransactionBtn = new Button();
+            transactionPanel = new Panel();
+            panelFinishTransactionCardBtn = new Button();
+            panelFinishTransactionCashBtn = new Button();
             baseDiscountEur = new Button();
             baseDiscountPrcnt = new Button();
             baseQBtn = new Button();
@@ -41,22 +46,29 @@
             productIDbtn = new Button();
             errorLabel = new Label();
             panel1.SuspendLayout();
+            transactionPanel.SuspendLayout();
             leftPanel.SuspendLayout();
             SuspendLayout();
             // 
             // logOutButton
             // 
+            logOutButton.BackColor = Color.Brown;
+            logOutButton.FlatAppearance.BorderSize = 0;
+            logOutButton.FlatStyle = FlatStyle.Flat;
             logOutButton.Location = new Point(12, 152);
             logOutButton.Name = "logOutButton";
             logOutButton.Size = new Size(98, 98);
             logOutButton.TabIndex = 0;
             logOutButton.Text = "Log Out";
-            logOutButton.UseVisualStyleBackColor = true;
+            logOutButton.UseVisualStyleBackColor = false;
             logOutButton.Click += logOutButton_Click_1;
             // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(24, 30, 54);
+            panel1.Controls.Add(goBackTransactionBtn);
+            panel1.Controls.Add(finishTransactionBtn);
+            panel1.Controls.Add(transactionPanel);
             panel1.Controls.Add(baseDiscountEur);
             panel1.Controls.Add(baseDiscountPrcnt);
             panel1.Controls.Add(baseQBtn);
@@ -68,44 +80,119 @@
             panel1.Size = new Size(1426, 262);
             panel1.TabIndex = 1;
             // 
+            // goBackTransactionBtn
+            // 
+            goBackTransactionBtn.BackColor = Color.IndianRed;
+            goBackTransactionBtn.FlatAppearance.BorderSize = 0;
+            goBackTransactionBtn.FlatStyle = FlatStyle.Flat;
+            goBackTransactionBtn.Location = new Point(1168, 7);
+            goBackTransactionBtn.Name = "goBackTransactionBtn";
+            goBackTransactionBtn.Size = new Size(217, 42);
+            goBackTransactionBtn.TabIndex = 8;
+            goBackTransactionBtn.Text = "<-----------";
+            goBackTransactionBtn.UseVisualStyleBackColor = false;
+            goBackTransactionBtn.Click += goBackTransactionBtn_Click;
+            // 
+            // finishTransactionBtn
+            // 
+            finishTransactionBtn.BackColor = Color.DarkOliveGreen;
+            finishTransactionBtn.FlatAppearance.BorderSize = 2;
+            finishTransactionBtn.FlatStyle = FlatStyle.Flat;
+            finishTransactionBtn.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            finishTransactionBtn.Location = new Point(1168, 55);
+            finishTransactionBtn.Name = "finishTransactionBtn";
+            finishTransactionBtn.Size = new Size(217, 42);
+            finishTransactionBtn.TabIndex = 7;
+            finishTransactionBtn.Text = "Finish Transaction";
+            finishTransactionBtn.UseVisualStyleBackColor = false;
+            finishTransactionBtn.Click += finishTransactionBtn_Click;
+            // 
+            // transactionPanel
+            // 
+            transactionPanel.BackColor = Color.FromArgb(24, 30, 20);
+            transactionPanel.Controls.Add(panelFinishTransactionCardBtn);
+            transactionPanel.Controls.Add(panelFinishTransactionCashBtn);
+            transactionPanel.Location = new Point(1147, 112);
+            transactionPanel.Name = "transactionPanel";
+            transactionPanel.Size = new Size(255, 124);
+            transactionPanel.TabIndex = 7;
+            // 
+            // panelFinishTransactionCardBtn
+            // 
+            panelFinishTransactionCardBtn.BackColor = Color.SteelBlue;
+            panelFinishTransactionCardBtn.FlatAppearance.BorderSize = 0;
+            panelFinishTransactionCardBtn.FlatStyle = FlatStyle.Flat;
+            panelFinishTransactionCardBtn.Location = new Point(140, 13);
+            panelFinishTransactionCardBtn.Name = "panelFinishTransactionCardBtn";
+            panelFinishTransactionCardBtn.Size = new Size(98, 98);
+            panelFinishTransactionCardBtn.TabIndex = 5;
+            panelFinishTransactionCardBtn.Text = "Card";
+            panelFinishTransactionCardBtn.UseVisualStyleBackColor = false;
+            panelFinishTransactionCardBtn.Click += panelFinishTransactionCardBtn_Click;
+            // 
+            // panelFinishTransactionCashBtn
+            // 
+            panelFinishTransactionCashBtn.BackColor = Color.DarkOliveGreen;
+            panelFinishTransactionCashBtn.FlatAppearance.BorderSize = 0;
+            panelFinishTransactionCashBtn.FlatStyle = FlatStyle.Flat;
+            panelFinishTransactionCashBtn.Location = new Point(21, 13);
+            panelFinishTransactionCashBtn.Name = "panelFinishTransactionCashBtn";
+            panelFinishTransactionCashBtn.Size = new Size(98, 98);
+            panelFinishTransactionCashBtn.TabIndex = 6;
+            panelFinishTransactionCashBtn.Text = "Cash";
+            panelFinishTransactionCashBtn.UseVisualStyleBackColor = false;
+            panelFinishTransactionCashBtn.Click += panelFinishTransactionCashBtn_Click;
+            // 
             // baseDiscountEur
             // 
+            baseDiscountEur.BackColor = Color.Gray;
+            baseDiscountEur.FlatAppearance.BorderSize = 0;
+            baseDiscountEur.FlatStyle = FlatStyle.Flat;
             baseDiscountEur.Location = new Point(517, 138);
             baseDiscountEur.Name = "baseDiscountEur";
             baseDiscountEur.Size = new Size(98, 98);
             baseDiscountEur.TabIndex = 4;
             baseDiscountEur.Text = "Discount €";
-            baseDiscountEur.UseVisualStyleBackColor = true;
+            baseDiscountEur.UseVisualStyleBackColor = false;
             baseDiscountEur.Click += baseDiscountEur_Click;
             // 
             // baseDiscountPrcnt
             // 
+            baseDiscountPrcnt.BackColor = Color.Gray;
+            baseDiscountPrcnt.FlatAppearance.BorderSize = 0;
+            baseDiscountPrcnt.FlatStyle = FlatStyle.Flat;
             baseDiscountPrcnt.Location = new Point(401, 138);
             baseDiscountPrcnt.Name = "baseDiscountPrcnt";
             baseDiscountPrcnt.Size = new Size(98, 98);
             baseDiscountPrcnt.TabIndex = 3;
             baseDiscountPrcnt.Text = "Discount %";
-            baseDiscountPrcnt.UseVisualStyleBackColor = true;
+            baseDiscountPrcnt.UseVisualStyleBackColor = false;
             baseDiscountPrcnt.Click += baseDiscountPrcnt_Click;
             // 
             // baseQBtn
             // 
+            baseQBtn.BackColor = Color.Chocolate;
+            baseQBtn.FlatAppearance.BorderSize = 0;
+            baseQBtn.FlatStyle = FlatStyle.Flat;
             baseQBtn.Location = new Point(517, 34);
             baseQBtn.Name = "baseQBtn";
             baseQBtn.Size = new Size(98, 98);
             baseQBtn.TabIndex = 2;
             baseQBtn.Text = "Change Quantity";
-            baseQBtn.UseVisualStyleBackColor = true;
+            baseQBtn.UseVisualStyleBackColor = false;
             baseQBtn.Click += baseQBtn_Click;
             // 
             // baseDeleteBtn
             // 
+            baseDeleteBtn.BackColor = Color.IndianRed;
+            baseDeleteBtn.FlatAppearance.BorderSize = 0;
+            baseDeleteBtn.FlatStyle = FlatStyle.Flat;
             baseDeleteBtn.Location = new Point(401, 34);
             baseDeleteBtn.Name = "baseDeleteBtn";
             baseDeleteBtn.Size = new Size(98, 98);
             baseDeleteBtn.TabIndex = 1;
             baseDeleteBtn.Text = "Delete";
-            baseDeleteBtn.UseVisualStyleBackColor = true;
+            baseDeleteBtn.UseVisualStyleBackColor = false;
             baseDeleteBtn.Click += button1_Click;
             // 
             // leftPanel
@@ -123,9 +210,11 @@
             // totalPrice
             // 
             totalPrice.AutoSize = true;
-            totalPrice.Location = new Point(58, 550);
+            totalPrice.Font = new Font("Arial Rounded MT Bold", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            totalPrice.ForeColor = Color.LightGreen;
+            totalPrice.Location = new Point(29, 557);
             totalPrice.Name = "totalPrice";
-            totalPrice.Size = new Size(51, 15);
+            totalPrice.Size = new Size(99, 24);
             totalPrice.TabIndex = 1;
             totalPrice.Text = "Price: €0";
             totalPrice.Click += label1_Click_1;
@@ -174,6 +263,7 @@
             productIDtxt.Size = new Size(257, 23);
             productIDtxt.TabIndex = 0;
             productIDtxt.TextChanged += productIDtxt_TextChanged;
+            productIDtxt.KeyDown += productIDtxt_KeyDown;
             // 
             // productIDbtn
             // 
@@ -211,6 +301,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form2";
             panel1.ResumeLayout(false);
+            transactionPanel.ResumeLayout(false);
             leftPanel.ResumeLayout(false);
             leftPanel.PerformLayout();
             ResumeLayout(false);
@@ -231,5 +322,10 @@
         private Button baseQBtn;
         private Button baseDiscountEur;
         private Button baseDiscountPrcnt;
+        private Button panelFinishTransactionCardBtn;
+        private Button panelFinishTransactionCashBtn;
+        private Panel transactionPanel;
+        private Button finishTransactionBtn;
+        private Button goBackTransactionBtn;
     }
 }
