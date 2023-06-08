@@ -5,7 +5,7 @@ A point of sale system developed with Winforms using C#.
 ## Images
 ![Alt Text](images/login.png)
 ![Alt Text](images/main.png)
-![Alt Text](examples/quantity.png)
+![Alt Text](images/quantity.png)
 
 
 ## Attributes
