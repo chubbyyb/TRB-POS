@@ -14,7 +14,7 @@ A point of sale system developed with Winforms using C#.
 * Inventory management
 * Add a searchable DB inside the program
 * Test/adapt program for touchscreens
-* Optimize and Secure SQL connections 
+* Optimize and ~~Secure SQL connections~~
 * Bug testing and cleanup
 * Analytics, can be done in a seperate program
 * Add features that a normal POS has
