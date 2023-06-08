@@ -18,6 +18,7 @@ A point of sale system developed with Winforms using C#.
 * Bug testing and cleanup
 * Analytics, can be done in a seperate program
 * Add features that a normal POS has
+* GUI design
 
 
 
