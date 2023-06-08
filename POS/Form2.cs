@@ -74,7 +74,7 @@ namespace POS
             string currentProductID = productIDtxt.Text;
 
             // SQL query to search for the number "00002" under the "Product ID" table
-            string sqlQuery = $"SELECT * FROM Table1 WHERE ProductID = \"{(productIDtxt.Text).ToString()}\"";
+            string sqlQuery = $"SELECT * FROM Table1 WHERE ProductID = @ProductID";
 
             using (OleDbConnection connection = new OleDbConnection(connectionString))
             {
@@ -83,6 +83,8 @@ namespace POS
 
                 // Create a command object with the SQL query and connection
                 OleDbCommand command = new OleDbCommand(sqlQuery, connection);
+
+                command.Parameters.AddWithValue("@ProductID", currentProductID);
 
                 // Execute the query and obtain a data reader
                 OleDbDataReader reader = command.ExecuteReader();
@@ -357,7 +359,7 @@ namespace POS
                 decimal productPrice = 0;
                 string productSelected = buyingPanel.GetControlFromPosition(productNameCol, rowPressed).Text;
 
-                string sqlQuery = $"SELECT * FROM Table1 WHERE ProductName = \"{(productSelected)}\"";
+                string sqlQuery = $"SELECT * FROM Table1 WHERE ProductName = @productSelected";
 
                 using (OleDbConnection connection = new OleDbConnection(connectionString))
                 {
@@ -366,6 +368,8 @@ namespace POS
 
                     // Create a command object with the SQL query and connection
                     OleDbCommand command = new OleDbCommand(sqlQuery, connection);
+
+                    command.Parameters.AddWithValue("@ProductID", productSelected);
 
                     // Execute the query and obtain a data reader
                     OleDbDataReader reader = command.ExecuteReader();
@@ -552,13 +556,16 @@ namespace POS
 
             try
             {
-                sqlQuery = $"INSERT INTO Table1 (totalPrice, dateOfTransaction, type) VALUES ({priceOfGoods}, '{DateTime.Now.ToString("dd/MM/yy")}', 'Card')";
+                sqlQuery = $"INSERT INTO Table1 (totalPrice, dateOfTransaction, type) VALUES (@priceOfGoods, @DateOfTransaction, @Card)";
 
                 using (OleDbConnection connection = new OleDbConnection(connectionStringRecords))
                 {
                     connection.Open();
 
                     OleDbCommand command = new OleDbCommand(sqlQuery, connection);
+                    command.Parameters.AddWithValue("@priceOfGoods", priceOfGoods);
+                    command.Parameters.AddWithValue("@DateOfTransaction", DateTime.Now.ToString("dd/MM/yy"));
+                    command.Parameters.AddWithValue("@Type", "Card");
                     command.ExecuteNonQuery();
                     connection.Close();
                 }
@@ -617,13 +624,16 @@ namespace POS
 
             try
             {
-                sqlQuery = $"INSERT INTO Table1 (totalPrice, dateOfTransaction, type) VALUES ({priceOfGoods}, '{DateTime.Now.ToString("dd/MM/yy")}', 'Cash')";
+                sqlQuery = $"INSERT INTO Table1 (totalPrice, dateOfTransaction, type) VALUES (@priceOfGoods, @DateOfTransaction, @Type)";
 
                 using (OleDbConnection connection = new OleDbConnection(connectionStringRecords))
                 {
                     connection.Open();
 
                     OleDbCommand command = new OleDbCommand(sqlQuery, connection);
+                    command.Parameters.AddWithValue("@priceOfGoods", priceOfGoods);
+                    command.Parameters.AddWithValue("@DateOfTransaction", DateTime.Now.ToString("dd/MM/yy"));
+                    command.Parameters.AddWithValue("@Type", "Cash");
                     command.ExecuteNonQuery();
                     connection.Close();
                 }
