@@ -1,5 +1,26 @@
 # TRB-POS
-A point of sale system developed with Winforms using C#.
+
+A point of sale system developed with Winforms using C#. 
+
+#### Current:
+* Login function [needs to be refined]
+* Discount functions
+* Quantity functions
+* Reciept function ready to be integrated
+* Product information retrieved from database [SQL]
+* Transactions are logged to another databse [SQL]
+
+#### TO DO:
+* Inventory management
+* Add a searchable DB inside the program
+* Test/adapt program for touchscreens
+* Optimize and Secure SQL connections 
+* Bug testing and cleanup
+* Analytics, can be done in a seperate program
+* Add features that a normal POS has
+
+
+
 
 
 ## Images
