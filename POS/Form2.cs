@@ -156,10 +156,8 @@ namespace POS
                             Debug.WriteLine("Already exists, incrementing product");
                             productsDict[productName]++;
 
-                            // Change labels
-                            Debug.WriteLine($"\n Amount of item: {(buyingPanel.GetControlFromPosition(productQntCol, productPosition[productName])).Text}");
-
-                            // Change Quantity
+                            // Increment product quantity label
+                            Debug.WriteLine($"\n Amount of item: {productsDict[productName]}");
                             buyingPanel.GetControlFromPosition(productQntCol, productPosition[productName]).Text =
                                (Int32.Parse(buyingPanel.GetControlFromPosition(productQntCol, productPosition[productName]).Text) + 1).ToString();
 
@@ -170,7 +168,6 @@ namespace POS
                             // Change Total Price
                             priceOfGoods = priceOfGoods + productPrice;
                             totalPrice.Text = $"Price: €{(priceOfGoods).ToString()}";
-
 
                         }
                         else
@@ -183,8 +180,7 @@ namespace POS
                             buyingPanel.Controls.Add(label2, productPriceCol, row);
                             buyingPanel.Controls.Add(label3, productQntCol, row);
 
-                            // Add deletion and quantity button
-                            //buyingPanel.Controls.Add(deleteButton, column + 3, row);
+                            // Add Selection button
                             buyingPanel.Controls.Add(quantityButton, column + 4, row);
 
                             // Change total price
@@ -233,36 +229,37 @@ namespace POS
         }
 
 
-        // Button click event handler
+        // Deletion button [Removed]
         private void Button_Click(object sender, EventArgs e)
         {
-            Button clickedButton = (Button)sender;
-            // Perform actions specific to the second row button
-            //MessageBox.Show($"Button in row {buyingPanel.GetRow(clickedButton)} clicked");
-            Debug.WriteLine($"Button in row {buyingPanel.GetRow(clickedButton)} clicked");
+            //Button clickedButton = (Button)sender;
 
-            int rowPressed = buyingPanel.GetRow(clickedButton);
+            //MessageBox.Show($"Button in row {buyingPanel.GetRow(clickedButton)} clicked");
+            //Debug.WriteLine($"Button in row {buyingPanel.GetRow(clickedButton)} clicked");
+
+            //int rowPressed = buyingPanel.GetRow(clickedButton);
 
             // Remove presence from productsDict and productPosition
-            productsDict.Remove(buyingPanel.GetControlFromPosition(0, rowPressed).Text);
-            productPosition.Remove(buyingPanel.GetControlFromPosition(0, rowPressed).Text);
+            //productsDict.Remove(buyingPanel.GetControlFromPosition(0, rowPressed).Text);
+            //productPosition.Remove(buyingPanel.GetControlFromPosition(0, rowPressed).Text);
 
             // Adjust the price
-            priceOfGoods = priceOfGoods - decimal.Parse(buyingPanel.GetControlFromPosition(1, rowPressed).Text);
-            totalPrice.Text = "Price: €" + priceOfGoods.ToString();
+            //priceOfGoods = priceOfGoods - decimal.Parse(buyingPanel.GetControlFromPosition(1, rowPressed).Text);
+            //totalPrice.Text = "Price: €" + priceOfGoods.ToString();
 
             // Delete the row
-            for (int i = 0; i < buyingPanel.ColumnCount; i++)
-            {
-                Control Control = buyingPanel.GetControlFromPosition(i, rowPressed);
-                buyingPanel.Controls.Remove(Control);
-            }
+            //for (int i = 0; i < buyingPanel.ColumnCount; i++)
+            //{
+               // Control Control = buyingPanel.GetControlFromPosition(i, rowPressed);
+               // buyingPanel.Controls.Remove(Control);
+            //}
 
             // Decrement all productPosition above x
             // Move rows up
 
         }
 
+        // Selection button
         private void quant_Click(object sender, EventArgs e)
         {
             Button clickedButton = (Button)sender;
@@ -290,8 +287,6 @@ namespace POS
             {
                 buyingPanel.GetControlFromPosition(i, rowPressed).BackColor = Color.LightBlue;
             }
-
-            // Clear highlighting after another thing is highlighted
         }
 
         // base delete button
@@ -323,7 +318,7 @@ namespace POS
             }
         }
 
-
+        // base quantity button
         private void baseQBtn_Click(object sender, EventArgs e)
         {
 
@@ -336,24 +331,27 @@ namespace POS
 
                 string quantityAmount = "a";
                 int quantityAmountInteger = 0;
-                do
-                {
-                    quantityAmount = Microsoft.VisualBasic.Interaction.InputBox("How many items?", "Quantity Selector", "1-999");
-                } while (Int32.TryParse(quantityAmount, out quantityAmountInteger) == false || quantityAmountInteger < 1);
 
-                //using(quantitySelectorForm quantitySelectorForm = new quantitySelectorForm())
-                //{
-                //    if(quantitySelectorForm.ShowDialog() == DialogResult.OK) 
-                //    {
-                //        if((Int32.TryParse(quantitySelectorForm.selectedText, out quantityAmountInteger) == false) || quantityAmountInteger < 1)
-                //        {
-                //            MessageBox.Show("Ivalid selection, number must be over 1!");
-                //            return;
-                //       }
-                //        quantityAmount = quantitySelectorForm.selectedText;
-                //    }
-                //    else if(quantitySelectorForm.sh)
-                //}
+                using(quantitySelectorForm quantitySelectorForm = new quantitySelectorForm())
+                {
+
+                    DialogResult dialogResult = quantitySelectorForm.ShowDialog();
+
+                    if (dialogResult == DialogResult.OK) 
+                    {
+                        if((Int32.TryParse(quantitySelectorForm.selectedText, out quantityAmountInteger) == false) || quantityAmountInteger < 1)
+                        {
+                            MessageBox.Show("Ivalid selection, number must be over 1!");
+                            return;
+                        }
+                    }
+                    else if(dialogResult == DialogResult.Cancel)
+                    {
+                        MessageBox.Show("Process cancelled");
+                        return;
+                    }
+                }
+
 
 
                 decimal productPrice = 0;
@@ -428,10 +426,26 @@ namespace POS
                 priceOfRow = decimal.Parse(buyingPanel.GetControlFromPosition(productPriceCol, rowPressed).Text);
 
                 // Get discount amount
-                do
+                // Get discount amount
+                using (DiscountEuro DiscountEuro = new DiscountEuro())
                 {
-                    percentDiscount = Microsoft.VisualBasic.Interaction.InputBox("How much discount (%) ?", "Discount Selector", "50");
-                } while (decimal.TryParse(percentDiscount, out percentDiscountDecimal) == false || percentDiscountDecimal < 1 || percentDiscountDecimal > 100);
+
+                    DialogResult dialogResult = DiscountEuro.ShowDialog();
+
+                    if (dialogResult == DialogResult.OK)
+                    {
+                        if ((Decimal.TryParse(DiscountEuro.selectedText, out percentDiscountDecimal) == false) || percentDiscountDecimal < 1)
+                        {
+                            MessageBox.Show("Ivalid selection, number must be over 1!");
+                            return;
+                        }
+                    }
+                    else if (dialogResult == DialogResult.Cancel)
+                    {
+                        MessageBox.Show("Process cancelled");
+                        return;
+                    }
+                }
 
 
                 // Adjust total price
@@ -439,10 +453,20 @@ namespace POS
 
                 // Adjust row price
                 priceOfRow = priceOfRow * ((100 - percentDiscountDecimal) / 100);
-                buyingPanel.GetControlFromPosition(productPriceCol, rowPressed).Text = priceOfRow.ToString("#.##");
+
+                if (priceOfRow == 0)
+                {
+                    priceOfRow = 0;
+                    buyingPanel.GetControlFromPosition(productPriceCol, rowPressed).Text = "0";
+
+                }
+                else
+                {
+                    buyingPanel.GetControlFromPosition(productPriceCol, rowPressed).Text = priceOfRow.ToString("0.00");
+                }
 
                 // Adjust total price label
-                totalPrice.Text = $"Price: €{(priceOfGoods + priceOfRow).ToString("#.##")}";
+                totalPrice.Text = $"Price: €{(priceOfGoods).ToString("0.00")}";
             }
         }
 
@@ -460,21 +484,46 @@ namespace POS
                 priceOfRow = decimal.Parse(buyingPanel.GetControlFromPosition(productPriceCol, rowPressed).Text);
 
                 // Get discount amount
-                do
+                using (DiscountEuro DiscountEuro = new DiscountEuro())
                 {
-                    euroDiscount = Microsoft.VisualBasic.Interaction.InputBox("How much discount (€) ?", "Discount Selector", "50.21");
-                } while (decimal.TryParse(euroDiscount, out euroDiscountDecimal) == false || euroDiscountDecimal < 0);
 
+                    DialogResult dialogResult = DiscountEuro.ShowDialog();
 
-                // Adjust total price
-                priceOfGoods = priceOfGoods - priceOfRow;
+                    if (dialogResult == DialogResult.OK)
+                    {
+                        if ((Decimal.TryParse(DiscountEuro.selectedText, out euroDiscountDecimal) == false) || euroDiscountDecimal < 1)
+                        {
+                            MessageBox.Show("Ivalid selection, number must be over 1!");
+                            return;
+                        }
+                    }
+                    else if (dialogResult == DialogResult.Cancel)
+                    {
+                        MessageBox.Show("Process cancelled");
+                        return;
+                    }
+                }
+
 
                 // Adjust row price
                 priceOfRow = priceOfRow - euroDiscountDecimal;
-                buyingPanel.GetControlFromPosition(productPriceCol, rowPressed).Text = priceOfRow.ToString("#.##");
+
+                if(priceOfRow == 0)
+                {
+                    priceOfRow = 0;
+                    buyingPanel.GetControlFromPosition(productPriceCol, rowPressed).Text = "0";
+
+                }
+                else
+                {
+                    buyingPanel.GetControlFromPosition(productPriceCol, rowPressed).Text = priceOfRow.ToString("0.00");
+                }
+
+                // Adjust total price
+                priceOfGoods = priceOfGoods - euroDiscountDecimal;
 
                 // Adjust total price label
-                totalPrice.Text = $"Price: €{(priceOfGoods + priceOfRow).ToString("#.##")}";
+                totalPrice.Text = $"Price: €{(priceOfGoods).ToString("0.00")}";
             }
         }
 
@@ -487,40 +536,18 @@ namespace POS
 
             foreach (KeyValuePair<string, int> pair in productsDict)
             {
-
-                sqlQuery = $"SELECT * FROM Table1 WHERE ProductName = \"{(pair.Key)}\"";
-
-                using (OleDbConnection connection = new OleDbConnection(connectionString))
+                // divide by 0 error checking
+                if(decimal.Parse(buyingPanel.GetControlFromPosition(productPriceCol, productPosition[pair.Key]).Text) == 0)
                 {
-                    // Open the database connection
-                    connection.Open();
-
-                    // Create a command object with the SQL query and connection
-                    OleDbCommand command = new OleDbCommand(sqlQuery, connection);
-
-                    // Execute the query and obtain a data reader
-                    OleDbDataReader reader = command.ExecuteReader();
-
-                    if (reader.HasRows)
-                    {
-                        errorLabel.Visible = false;
-
-                        while (reader.Read())
-                        {
-                            // Access the values of the retrieved row
-                            productPrice = reader.GetDecimal(reader.GetOrdinal("Price"));
-
-                            // Adjust the price
-                            productPrice = pair.Value * productPrice;
-                        }
-                    }
-
-                    reader.Close();
-                    connection.Close();
-
-                    Debug.WriteLine("Product: " + pair.Key + ", Quantity: " + pair.Value + ", Price: €" + productPrice);
-
+                    productPrice = 0;
+                    Debug.WriteLine("Product: " + pair.Key + ", Quantity: " + pair.Value + ", Price: € FREE");
                 }
+                else
+                {
+                    productPrice = (decimal.Parse(buyingPanel.GetControlFromPosition(productPriceCol, productPosition[pair.Key]).Text) / pair.Value) * productsDict[pair.Key];
+                    Debug.WriteLine("Product: " + pair.Key + ", Quantity: " + pair.Value + ", Price: €" + productPrice.ToString("0.00"));
+                }
+
             }
 
             try
@@ -574,39 +601,18 @@ namespace POS
 
             foreach (KeyValuePair<string, int> pair in productsDict)
             {
-
-                sqlQuery = $"SELECT * FROM Table1 WHERE ProductName = \"{(pair.Key)}\"";
-
-                using (OleDbConnection connection = new OleDbConnection(connectionString))
+                // divide by 0 error checking
+                if (decimal.Parse(buyingPanel.GetControlFromPosition(productPriceCol, productPosition[pair.Key]).Text) == 0)
                 {
-                    // Open the database connection
-                    connection.Open();
-
-                    // Create a command object with the SQL query and connection
-                    OleDbCommand command = new OleDbCommand(sqlQuery, connection);
-
-                    // Execute the query and obtain a data reader
-                    OleDbDataReader reader = command.ExecuteReader();
-
-                    if (reader.HasRows)
-                    {
-                        errorLabel.Visible = false;
-
-                        while (reader.Read())
-                        {
-                            // Access the values of the retrieved row
-                            productPrice = reader.GetDecimal(reader.GetOrdinal("Price"));
-
-                            // Adjust the price
-                            productPrice = pair.Value * productPrice;
-                        }
-                    }
-
-                    reader.Close();
-                    connection.Close();
-
-                    Debug.WriteLine("Product: " + pair.Key + ", Quantity: " + pair.Value + ", Price: €" + productPrice);
+                    productPrice = 0;
+                    Debug.WriteLine("Product: " + pair.Key + ", Quantity: " + pair.Value + ", Price: € FREE");
                 }
+                else
+                {
+                    productPrice = (decimal.Parse(buyingPanel.GetControlFromPosition(productPriceCol, productPosition[pair.Key]).Text) / pair.Value) * productsDict[pair.Key];
+                    Debug.WriteLine("Product: " + pair.Key + ", Quantity: " + pair.Value + ", Price: €" + productPrice.ToString("0.00"));
+                }
+
             }
 
             try

@@ -10,33 +10,27 @@ using System.Windows.Forms;
 
 namespace POS
 {
-    public partial class quantitySelectorForm : Form
+    public partial class DiscountEuro : Form
     {
-
         public string selectedText { get; set; }
 
-        public quantitySelectorForm()
+        public DiscountEuro()
         {
             InitializeComponent();
-            quantitySelectorTxt.Focus();
+            discountEurTxt.Focus();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void DiscountEuro_Load(object sender, EventArgs e)
         {
 
         }
 
-        private void quantitySelectorForm_Load(object sender, EventArgs e)
+        private void discountEurTxt_TextChanged(object sender, EventArgs e)
         {
-
+            selectedText = discountEurTxt.Text;
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            selectedText = quantitySelectorTxt.Text;
-        }
-
-        private void quantitySelectorTxt_KeyDown(object sender, KeyEventArgs e)
+        private void discountEurTxt_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {

@@ -87,10 +87,11 @@
             // label1
             // 
             label1.AutoSize = true;
+            label1.FlatStyle = FlatStyle.Flat;
             label1.Font = new Font("Yu Gothic", 18F, FontStyle.Bold, GraphicsUnit.Point);
             label1.ForeColor = SystemColors.ControlLight;
             label1.ImageAlign = ContentAlignment.TopCenter;
-            label1.Location = new Point(437, 32);
+            label1.Location = new Point(420, 35);
             label1.Name = "label1";
             label1.Size = new Size(64, 31);
             label1.TabIndex = 0;
