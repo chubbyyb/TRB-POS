@@ -45,7 +45,6 @@
             productIDtxt = new TextBox();
             productIDbtn = new Button();
             errorLabel = new Label();
-            button1 = new Button();
             panel1.SuspendLayout();
             transactionPanel.SuspendLayout();
             leftPanel.SuspendLayout();
@@ -286,25 +285,12 @@
             errorLabel.Text = "label1";
             errorLabel.Click += label1_Click;
             // 
-            // button1
-            // 
-            button1.BackColor = Color.LimeGreen;
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Location = new Point(1327, 12);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 34);
-            button1.TabIndex = 5;
-            button1.Text = "Admin";
-            button1.UseVisualStyleBackColor = false;
-            // 
             // Form2
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(46, 51, 73);
             ClientSize = new Size(1426, 856);
-            Controls.Add(button1);
             Controls.Add(errorLabel);
             Controls.Add(productIDbtn);
             Controls.Add(productIDtxt);
@@ -314,7 +300,6 @@
             Name = "Form2";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form2";
-            Load += Form2_Load;
             panel1.ResumeLayout(false);
             transactionPanel.ResumeLayout(false);
             leftPanel.ResumeLayout(false);
@@ -342,6 +327,5 @@
         private Panel transactionPanel;
         private Button finishTransactionBtn;
         private Button goBackTransactionBtn;
-        private Button button1;
     }
 }

@@ -252,8 +252,8 @@ namespace POS
             // Delete the row
             //for (int i = 0; i < buyingPanel.ColumnCount; i++)
             //{
-            // Control Control = buyingPanel.GetControlFromPosition(i, rowPressed);
-            // buyingPanel.Controls.Remove(Control);
+               // Control Control = buyingPanel.GetControlFromPosition(i, rowPressed);
+               // buyingPanel.Controls.Remove(Control);
             //}
 
             // Decrement all productPosition above x
@@ -334,20 +334,20 @@ namespace POS
                 string quantityAmount = "a";
                 int quantityAmountInteger = 0;
 
-                using (quantitySelectorForm quantitySelectorForm = new quantitySelectorForm())
+                using(quantitySelectorForm quantitySelectorForm = new quantitySelectorForm())
                 {
 
                     DialogResult dialogResult = quantitySelectorForm.ShowDialog();
 
-                    if (dialogResult == DialogResult.OK)
+                    if (dialogResult == DialogResult.OK) 
                     {
-                        if ((Int32.TryParse(quantitySelectorForm.selectedText, out quantityAmountInteger) == false) || quantityAmountInteger < 1)
+                        if((Int32.TryParse(quantitySelectorForm.selectedText, out quantityAmountInteger) == false) || quantityAmountInteger < 1)
                         {
                             MessageBox.Show("Ivalid selection, number must be over 1!");
                             return;
                         }
                     }
-                    else if (dialogResult == DialogResult.Cancel)
+                    else if(dialogResult == DialogResult.Cancel)
                     {
                         MessageBox.Show("Process cancelled");
                         return;
@@ -512,7 +512,7 @@ namespace POS
                 // Adjust row price
                 priceOfRow = priceOfRow - euroDiscountDecimal;
 
-                if (priceOfRow == 0)
+                if(priceOfRow == 0)
                 {
                     priceOfRow = 0;
                     buyingPanel.GetControlFromPosition(productPriceCol, rowPressed).Text = "0";
@@ -541,7 +541,7 @@ namespace POS
             foreach (KeyValuePair<string, int> pair in productsDict)
             {
                 // divide by 0 error checking
-                if (decimal.Parse(buyingPanel.GetControlFromPosition(productPriceCol, productPosition[pair.Key]).Text) == 0)
+                if(decimal.Parse(buyingPanel.GetControlFromPosition(productPriceCol, productPosition[pair.Key]).Text) == 0)
                 {
                     productPrice = 0;
                     Debug.WriteLine("Product: " + pair.Key + ", Quantity: " + pair.Value + ", Price: € FREE");
@@ -622,7 +622,6 @@ namespace POS
 
             }
 
-            // Record Transaction
             try
             {
                 sqlQuery = $"INSERT INTO Table1 (totalPrice, dateOfTransaction, type) VALUES (@priceOfGoods, @DateOfTransaction, @Type)";
@@ -642,34 +641,7 @@ namespace POS
             catch (Exception ex)
             {
                 // Handle the exception or log the error message
-                Debug.WriteLine("An error occurred during transaction logging: " + ex.Message);
-            }
-
-
-            // Stock Management
-            try
-            {
-
-
-                using (OleDbConnection connection = new OleDbConnection(connectionString))
-                {
-                    connection.Open();
-
-                    foreach (KeyValuePair<string, int> pair in productsDict)
-                    {
-                        sqlQuery = $"UPDATE Table1 SET AmountOfStock = AmountOfStock - {pair.Value} WHERE ProductName = @ProductName";
-                        OleDbCommand command = new OleDbCommand(sqlQuery, connection);
-                        command.Parameters.AddWithValue("@ProductName", pair.Key);
-                        command.ExecuteNonQuery();
-                    }
-
-                    connection.Close();
-                }
-            }
-            catch(Exception ex) 
-            {
-                // Handle the exception or log the error message
-                Debug.WriteLine("An error occurred during stock management: " + ex.Message);
+                Debug.WriteLine("An error occurred: " + ex.Message);
             }
 
 
@@ -751,11 +723,6 @@ namespace POS
 
                 productIDbtn_Click(sender, e);
             }
-        }
-
-        private void Form2_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
