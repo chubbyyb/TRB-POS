@@ -45,7 +45,7 @@
             productIDtxt = new TextBox();
             productIDbtn = new Button();
             errorLabel = new Label();
-            button1 = new Button();
+            adminButton = new Button();
             panel4 = new Panel();
             keypadBck = new Button();
             keyPad0 = new Button();
@@ -89,9 +89,9 @@
             panel1.Controls.Add(baseDeleteBtn);
             panel1.Controls.Add(logOutButton);
             panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 594);
+            panel1.Location = new Point(0, 544);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1426, 262);
+            panel1.Size = new Size(1257, 262);
             panel1.TabIndex = 1;
             // 
             // goBackTransactionBtn
@@ -99,7 +99,7 @@
             goBackTransactionBtn.BackColor = Color.IndianRed;
             goBackTransactionBtn.FlatAppearance.BorderSize = 0;
             goBackTransactionBtn.FlatStyle = FlatStyle.Flat;
-            goBackTransactionBtn.Location = new Point(1168, 7);
+            goBackTransactionBtn.Location = new Point(990, 21);
             goBackTransactionBtn.Name = "goBackTransactionBtn";
             goBackTransactionBtn.Size = new Size(217, 42);
             goBackTransactionBtn.TabIndex = 8;
@@ -113,7 +113,7 @@
             finishTransactionBtn.FlatAppearance.BorderSize = 2;
             finishTransactionBtn.FlatStyle = FlatStyle.Flat;
             finishTransactionBtn.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            finishTransactionBtn.Location = new Point(1168, 55);
+            finishTransactionBtn.Location = new Point(990, 69);
             finishTransactionBtn.Name = "finishTransactionBtn";
             finishTransactionBtn.Size = new Size(217, 42);
             finishTransactionBtn.TabIndex = 7;
@@ -126,7 +126,7 @@
             transactionPanel.BackColor = Color.FromArgb(24, 30, 20);
             transactionPanel.Controls.Add(panelFinishTransactionCardBtn);
             transactionPanel.Controls.Add(panelFinishTransactionCashBtn);
-            transactionPanel.Location = new Point(1147, 112);
+            transactionPanel.Location = new Point(969, 126);
             transactionPanel.Name = "transactionPanel";
             transactionPanel.Size = new Size(255, 124);
             transactionPanel.TabIndex = 7;
@@ -218,7 +218,7 @@
             leftPanel.Dock = DockStyle.Left;
             leftPanel.Location = new Point(0, 0);
             leftPanel.Name = "leftPanel";
-            leftPanel.Size = new Size(392, 594);
+            leftPanel.Size = new Size(392, 544);
             leftPanel.TabIndex = 2;
             // 
             // totalPrice
@@ -226,7 +226,7 @@
             totalPrice.AutoSize = true;
             totalPrice.Font = new Font("Arial Rounded MT Bold", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
             totalPrice.ForeColor = Color.LightGreen;
-            totalPrice.Location = new Point(29, 557);
+            totalPrice.Location = new Point(29, 480);
             totalPrice.Name = "totalPrice";
             totalPrice.Size = new Size(99, 24);
             totalPrice.TabIndex = 1;
@@ -245,7 +245,7 @@
             buyingPanel.Location = new Point(29, 24);
             buyingPanel.Name = "buyingPanel";
             buyingPanel.Padding = new Padding(13, 0, 13, 0);
-            buyingPanel.RowCount = 20;
+            buyingPanel.RowCount = 10;
             buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
             buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
             buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
@@ -256,25 +256,26 @@
             buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
             buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
             buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            buyingPanel.Size = new Size(340, 520);
+            buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            buyingPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            buyingPanel.Size = new Size(340, 453);
             buyingPanel.TabIndex = 0;
             buyingPanel.Paint += buyingPanel_Paint;
             // 
             // productIDtxt
             // 
-            productIDtxt.Location = new Point(428, 542);
+            productIDtxt.BorderStyle = BorderStyle.None;
+            productIDtxt.Location = new Point(438, 422);
             productIDtxt.Name = "productIDtxt";
-            productIDtxt.Size = new Size(257, 23);
+            productIDtxt.Size = new Size(257, 16);
             productIDtxt.TabIndex = 0;
             productIDtxt.TextChanged += productIDtxt_TextChanged;
             productIDtxt.Enter += current_box;
@@ -282,7 +283,7 @@
             // 
             // productIDbtn
             // 
-            productIDbtn.Location = new Point(691, 542);
+            productIDbtn.Location = new Point(701, 418);
             productIDbtn.Name = "productIDbtn";
             productIDbtn.Size = new Size(75, 23);
             productIDbtn.TabIndex = 3;
@@ -293,24 +294,25 @@
             // errorLabel
             // 
             errorLabel.AutoSize = true;
-            errorLabel.Location = new Point(428, 576);
+            errorLabel.Location = new Point(438, 452);
             errorLabel.Name = "errorLabel";
             errorLabel.Size = new Size(38, 15);
             errorLabel.TabIndex = 4;
             errorLabel.Text = "label1";
             errorLabel.Click += label1_Click;
             // 
-            // button1
+            // adminButton
             // 
-            button1.BackColor = Color.LimeGreen;
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Location = new Point(1327, 12);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 34);
-            button1.TabIndex = 5;
-            button1.Text = "Admin";
-            button1.UseVisualStyleBackColor = false;
+            adminButton.BackColor = Color.LimeGreen;
+            adminButton.FlatAppearance.BorderSize = 0;
+            adminButton.FlatStyle = FlatStyle.Flat;
+            adminButton.Location = new Point(1149, 24);
+            adminButton.Name = "adminButton";
+            adminButton.Size = new Size(75, 34);
+            adminButton.TabIndex = 5;
+            adminButton.Text = "Admin";
+            adminButton.UseVisualStyleBackColor = false;
+            adminButton.Click += button1_Click_1;
             // 
             // panel4
             // 
@@ -326,7 +328,7 @@
             panel4.Controls.Add(keyPad3);
             panel4.Controls.Add(keyPad2);
             panel4.Controls.Add(keyPad1);
-            panel4.Location = new Point(1005, 103);
+            panel4.Location = new Point(873, 110);
             panel4.Name = "panel4";
             panel4.Size = new Size(352, 394);
             panel4.TabIndex = 20;
@@ -347,6 +349,7 @@
             keypadBck.Text = "<--------";
             keypadBck.TextImageRelation = TextImageRelation.TextBeforeImage;
             keypadBck.UseVisualStyleBackColor = false;
+            keypadBck.Click += keypadBck_Click;
             // 
             // keyPad0
             // 
@@ -533,9 +536,9 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(46, 51, 73);
-            ClientSize = new Size(1426, 856);
+            ClientSize = new Size(1257, 806);
             Controls.Add(panel4);
-            Controls.Add(button1);
+            Controls.Add(adminButton);
             Controls.Add(errorLabel);
             Controls.Add(productIDbtn);
             Controls.Add(productIDtxt);
@@ -574,7 +577,7 @@
         private Panel transactionPanel;
         private Button finishTransactionBtn;
         private Button goBackTransactionBtn;
-        private Button button1;
+        private Button adminButton;
         private Panel panel4;
         private Button keypadBck;
         private Button keyPad0;

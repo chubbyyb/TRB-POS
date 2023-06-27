@@ -30,6 +30,8 @@ namespace POS
         public const string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\keith\OneDrive - Technological University Dublin\Documents\Database2.accdb";
         public const string connectionStringRecords = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\keith\OneDrive - Technological University Dublin\Documents\Database3.accdb";
 
+        private adminForm hiddenForm;
+
         Control currentBox = null;
 
 
@@ -55,6 +57,8 @@ namespace POS
             goBackTransactionBtn.Visible = false;
             goBackTransactionBtn.Enabled = false;
             //transactionPanel.BackColor = Color.FromArgb(25, Color.Black);
+
+            hiddenForm = new adminForm();
 
 
         }
@@ -735,42 +739,17 @@ namespace POS
             }
             else
             {
-                goBackTransactionBtn.Enabled = true;
-                goBackTransactionBtn.Visible = true;
-
                 transactionPanel.BorderStyle = BorderStyle.FixedSingle;
-                panelFinishTransactionCardBtn.Enabled = true;
-                panelFinishTransactionCashBtn.Enabled = true;
+                controlsVisibility(false);
 
-                productIDbtn.Enabled = false;
-                baseDeleteBtn.Enabled = false;
-                baseQBtn.Enabled = false;
-                baseDiscountEur.Enabled = false;
-                baseDiscountPrcnt.Enabled = false;
-                logOutButton.Enabled = false;
-
-                finishTransactionBtn.Enabled = false;
             }
         }
 
         private void goBackTransactionBtn_Click(object sender, EventArgs e)
         {
-            productIDbtn.Enabled = true;
-            baseDeleteBtn.Enabled = true;
-            baseQBtn.Enabled = true;
-            baseDiscountEur.Enabled = true;
-            baseDiscountPrcnt.Enabled = true;
-            logOutButton.Enabled = true;
 
             transactionPanel.BorderStyle = BorderStyle.None;
-            panelFinishTransactionCardBtn.Enabled = false;
-            panelFinishTransactionCashBtn.Enabled = false;
-
-
-            goBackTransactionBtn.Enabled = false;
-            goBackTransactionBtn.Visible = false;
-
-            finishTransactionBtn.Enabled = true;
+            controlsVisibility(true);
         }
 
         private void productIDtxt_KeyDown(object sender, KeyEventArgs e)
@@ -806,6 +785,48 @@ namespace POS
         private void current_box(object sender, EventArgs e)
         {
             currentBox = ActiveControl;
+        }
+
+        private void keypadBck_Click(object sender, EventArgs e)
+        {
+            if (currentBox == null || currentBox.Text.Length <= 0)
+            {
+                Debug.WriteLine("All deleted");
+                return;
+            }
+
+            currentBox.Text = currentBox.Text.Substring(0, currentBox.Text.Length - 1);
+        }
+
+        private void controlsVisibility(bool onOff)
+        {
+            panelFinishTransactionCardBtn.Enabled = !onOff;
+            panelFinishTransactionCashBtn.Enabled = !onOff;
+
+
+            goBackTransactionBtn.Enabled = !onOff;
+            goBackTransactionBtn.Visible = !onOff;
+
+            adminButton.Enabled = onOff;
+            buyingPanel.Enabled = onOff;
+
+            productIDbtn.Enabled = onOff;
+            productIDtxt.Enabled = onOff;
+
+            panel4.Enabled = onOff;
+
+            baseDeleteBtn.Enabled = onOff;
+            baseQBtn.Enabled = onOff;
+            baseDiscountEur.Enabled = onOff;
+            baseDiscountPrcnt.Enabled = onOff;
+            logOutButton.Enabled = onOff;
+
+            finishTransactionBtn.Enabled = onOff;
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            hiddenForm.Show();
         }
     }
 }
