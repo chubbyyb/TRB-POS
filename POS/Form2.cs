@@ -30,6 +30,8 @@ namespace POS
         public const string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\keith\OneDrive - Technological University Dublin\Documents\Database2.accdb";
         public const string connectionStringRecords = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\keith\OneDrive - Technological University Dublin\Documents\Database3.accdb";
 
+        Control currentBox = null;
+
 
 
         Dictionary<string, int> productsDict =
@@ -695,7 +697,7 @@ namespace POS
                     connection.Close();
                 }
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 // Handle the exception or log the error message
                 Debug.WriteLine("An error occurred during stock management: " + ex.Message);
@@ -785,6 +787,25 @@ namespace POS
         private void Form2_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void keypad_click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            string btnKey = btn.Text;
+
+            if (currentBox == null)
+            {
+                Debug.WriteLine("Nothing focused");
+                return;
+            }
+
+            currentBox.Text = currentBox.Text + btnKey;
+        }
+
+        private void current_box(object sender, EventArgs e)
+        {
+            currentBox = ActiveControl;
         }
     }
 }

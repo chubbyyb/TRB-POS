@@ -14,6 +14,8 @@ namespace POS
         public static int secondsCount = 0;
         public static int secondsSinceClick;
 
+        Control currentBox = null;
+
 
         public Form1()
         {
@@ -59,7 +61,6 @@ namespace POS
         private void textBox1_TextChanged_1(object sender, EventArgs e)
         {
 
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -91,7 +92,7 @@ namespace POS
         private void incorrectLoginVisibility()
         {
 
-            incorrectLogin.ForeColor = Color.FromArgb(46, 51, 73);
+            incorrectLogin.ForeColor = Color.FromArgb(24, 30, 54);
 
         }
 
@@ -125,6 +126,53 @@ namespace POS
         private void minButton_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
+        }
+
+        public static Control FindFocusedControl(Control control)
+        {
+            ContainerControl container = control as ContainerControl;
+            while (container != null)
+            {
+                control = container.ActiveControl;
+                container = control as ContainerControl;
+            }
+            return control;
+        }
+
+
+        private void keyPad1_Click(object sender, EventArgs e)
+        {
+            Debug.WriteLine(currentBox);
+        }
+
+        private void current_box(object sender, EventArgs e)
+        {
+            currentBox = ActiveControl;
+        }
+
+        private void keypad_click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            string btnKey = btn.Text;
+
+            if (currentBox == null)
+            {
+                Debug.WriteLine("Nothing focused");
+                return;
+            }
+
+            currentBox.Text = currentBox.Text + btnKey;
+        }
+
+        private void keypadBck_Click(object sender, EventArgs e)
+        {
+            if (currentBox == null || currentBox.Text.Length <= 0)
+            {
+                Debug.WriteLine("All deleted");
+                return;
+            }
+
+            currentBox.Text = currentBox.Text.Substring(0, currentBox.Text.Length - 1);
         }
     }
 }
