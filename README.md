@@ -9,9 +9,10 @@ A point of sale system developed with Winforms using C#.
 * Reciept function ready to be integrated
 * Product information retrieved from database [SQL]
 * Transactions are logged to another databse [SQL]
+* Inventory management
 
 #### TO DO:
-* Inventory management
+* ~~Inventory management~~
 * Add a searchable DB inside the program
 * Test/adapt program for touchscreens
 * Optimize and ~~Secure SQL connections~~
