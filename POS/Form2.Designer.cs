@@ -283,12 +283,15 @@
             // 
             // productIDbtn
             // 
-            productIDbtn.Location = new Point(701, 418);
+            productIDbtn.BackColor = Color.SeaShell;
+            productIDbtn.FlatAppearance.BorderSize = 0;
+            productIDbtn.FlatStyle = FlatStyle.Flat;
+            productIDbtn.Location = new Point(701, 409);
             productIDbtn.Name = "productIDbtn";
-            productIDbtn.Size = new Size(75, 23);
+            productIDbtn.Size = new Size(99, 40);
             productIDbtn.TabIndex = 3;
             productIDbtn.Text = "Add";
-            productIDbtn.UseVisualStyleBackColor = true;
+            productIDbtn.UseVisualStyleBackColor = false;
             productIDbtn.Click += productIDbtn_Click;
             // 
             // errorLabel
@@ -544,7 +547,7 @@
             Controls.Add(productIDtxt);
             Controls.Add(leftPanel);
             Controls.Add(panel1);
-            FormBorderStyle = FormBorderStyle.SizableToolWindow;
+            FormBorderStyle = FormBorderStyle.None;
             Name = "Form2";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form2";

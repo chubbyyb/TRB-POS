@@ -68,6 +68,7 @@ namespace POS
         {
             new Form1().Show();
             this.Close();
+            hiddenForm.Close();
         }
 
         private void productIDtxt_TextChanged(object sender, EventArgs e)
@@ -826,6 +827,11 @@ namespace POS
 
         private void button1_Click_1(object sender, EventArgs e)
         {
+            if (hiddenForm.Visible)
+            {
+                hiddenForm.Focus();
+            }
+
             hiddenForm.Show();
         }
     }
